@@ -1,5 +1,7 @@
 const { defineConfig } = require('@playwright/test');
 
+const { defineConfig } = require('@playwright/test');
+
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 30_000,
@@ -14,10 +16,6 @@ module.exports = defineConfig({
   },
   reporter: [
     ['list'],
-    ['allure-playwright', {
-      outputFolder: 'allure-results',
-      deletePreviousResults: false
-    }],
-    ['html', { open: 'never' }]
+    ['allure-playwright']
   ]
 });

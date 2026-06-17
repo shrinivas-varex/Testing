@@ -1,5 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
+const { test, expect } = require('@playwright/test');
+
 test('example.com title', async ({ page }) => {
   await page.goto('https://example.com');
   await expect(page).toHaveTitle(/Example Domain/);
