@@ -11,10 +11,16 @@ jobs:
   publish:
     name: Publish Allure Report
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Download Allure report artifact
         uses: dawidd6/action-download-artifact@v3
@@ -24,20 +30,57 @@ jobs:
           path: allure-report
           if_no_artifact_found: warn
 
-      - name: Check if report exists
+      - name: Check if report exists and create placeholder if needed
         run: |
+          echo "Checking for allure-report directory..."
           if [ -d "allure-report" ] && [ "$(ls -A allure-report)" ]; then
-            echo "? Allure report found"
-            ls -la allure-report/
+            echo "Report found"
+            ls -la allure-report/ | head -20
           else
-            echo "?? No allure-report directory found, creating placeholder"
+            echo "No allure-report directory found, creating placeholder"
             mkdir -p allure-report
-            echo "<h1>Test Report</h1>" > allure-report/index.html
+            cat > allure-report/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Test Report</title>
+            <style>
+              body { font-family: Arial, sans-serif; margin: 40px; }
+              h1 { color: #333; }
+              .status { padding: 10px; background: #f0f0f0; border-radius: 5px; }
+            </style>
+          </head>
+          <body>
+            <h1>Test Report</h1>
+            <div class="status">
+              <p>Report is generating...</p>
+              <p>Please check back shortly.</p>
+            </div>
+          </body>
+          </html>
+          EOF
+            echo "Placeholder created"
           fi
 
-      - name: Publish to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
-          force_orphan: true
+          path: './allure-report'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+      - name: Report deployment status
+        if: always()
+        run: |
+          echo "Deployment Status: ${{ job.status }}"
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "Report successfully published to GitHub Pages"
+            echo "Report URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          else
+            echo "Deployment encountered an issue"
+          fi
