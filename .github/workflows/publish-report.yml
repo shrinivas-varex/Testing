@@ -11,7 +11,6 @@ jobs:
   publish:
     name: Publish Allure Report
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Checkout code
@@ -25,18 +24,20 @@ jobs:
           path: allure-report
           if_no_artifact_found: warn
 
+      - name: Check if report exists
+        run: |
+          if [ -d "allure-report" ] && [ "$(ls -A allure-report)" ]; then
+            echo "? Allure report found"
+            ls -la allure-report/
+          else
+            echo "?? No allure-report directory found, creating placeholder"
+            mkdir -p allure-report
+            echo "<h1>Test Report</h1>" > allure-report/index.html
+          fi
+
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
-          cname: allure-report.github.io
-
-      - name: Comment deployment status
-        if: always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            console.log('Allure report published to GitHub Pages');
-            console.log('URL: https://${{ github.repository_owner }}.github.io/Testing/');
+          force_orphan: true
