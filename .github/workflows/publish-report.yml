@@ -1,0 +1,42 @@
+name: Publish Allure Report to GitHub Pages
+
+on:
+  workflow_run:
+    workflows: ["Playwright Tests with Allure Report"]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish Allure Report
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Allure report artifact
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: playwright-tests.yml
+          name: allure-report-20.x
+          path: allure-report
+          if_no_artifact_found: warn
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          cname: allure-report.github.io
+
+      - name: Comment deployment status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('Allure report published to GitHub Pages');
+            console.log('URL: https://${{ github.repository_owner }}.github.io/Testing/');
