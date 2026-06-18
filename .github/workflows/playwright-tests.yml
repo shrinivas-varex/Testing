@@ -23,12 +23,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Install dependencies
         run: npm ci
@@ -55,6 +57,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Generate Allure report
         if: always()
@@ -73,6 +76,7 @@ jobs:
         with:
           name: allure-results-${{ matrix.node-version }}
           path: allure-results
+          token: ${{ secrets.PAT_TOKEN }}
           retention-days: 30
           if-no-files-found: ignore
 
@@ -81,6 +85,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ matrix.node-version }}
+          token: ${{ secrets.PAT_TOKEN }}
           path: allure-report
           retention-days: 30
           if-no-files-found: ignore
@@ -90,6 +95,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report-${{ matrix.node-version }}
+          token: ${{ secrets.PAT_TOKEN }}
           path: playwright-report
           retention-days: 30
           if-no-files-found: ignore
@@ -99,6 +105,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.node-version }}
+          token: ${{ secrets.PAT_TOKEN }}
           path: test-results
           retention-days: 30
           if-no-files-found: ignore
@@ -108,6 +115,7 @@ jobs:
         uses: dorny/test-reporter@v1
         with:
           name: Playwright Test Report
+          token: ${{ secrets.PAT_TOKEN }}
           path: test-results/**/*.xml
           reporter: 'java-junit'
           fail-on-error: false
