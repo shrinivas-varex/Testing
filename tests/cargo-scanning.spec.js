@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const { test, expect } = require('@playwright/test');
+ 
 
 // Cargo Scanning App Test Suite
 // Tests for a cargo tracking and scanning system
