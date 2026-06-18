@@ -116,7 +116,7 @@ jobs:
         with:
           name: Playwright Test Report
           token: ${{ secrets.PAT_TOKEN }}
-          path: test-results/**/*.xml
+          path: playwright-report/index.html
           reporter: 'java-junit'
           fail-on-error: false
 
