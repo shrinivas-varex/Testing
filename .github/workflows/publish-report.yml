@@ -21,11 +21,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Download Allure report artifact
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: playwright-tests.yml
+          token: ${{ secrets.PAT_TOKEN }}
           name: allure-report-20.x
           path: allure-report
           if_no_artifact_found: warn
@@ -69,6 +71,7 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: './allure-report'
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Deploy to GitHub Pages
         id: deployment
