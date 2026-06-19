@@ -40,7 +40,7 @@ jobs:
       # Generate report even if tests fail
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v3
         with:
           name: playwright-report-${{ matrix.node-version }}
           token: ${{ secrets.PAT_TOKEN }}
