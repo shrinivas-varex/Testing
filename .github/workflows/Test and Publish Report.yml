@@ -42,7 +42,7 @@ jobs:
         if: always()
         uses: actions/upload-pages-artifact@v3
         with:
-          name: playwright-report-${{ matrix.node-version }}
+          name: Upload Pages Artifact
           token: ${{ secrets.PAT_TOKEN }}
           path: playwright-report
           retention-days: 30
