@@ -40,7 +40,7 @@ jobs:
       # Generate report even if tests fail
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           name: Upload Pages Artifact
           token: ${{ secrets.PAT_TOKEN }}
