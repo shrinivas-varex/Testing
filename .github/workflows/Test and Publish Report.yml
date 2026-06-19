@@ -43,6 +43,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: playwright-report
+          token: ${{ secrets.PAT_TOKEN }}
 
   deploy:
     if: always()
