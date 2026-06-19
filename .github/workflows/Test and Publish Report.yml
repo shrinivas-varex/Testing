@@ -38,12 +38,15 @@ jobs:
         run: npx playwright test
 
       # Generate report even if tests fail
-      - name: Upload Report Artifact
+      - name: Upload Playwright report
         if: always()
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: playwright-report
+          name: playwright-report-${{ matrix.node-version }}
           token: ${{ secrets.PAT_TOKEN }}
+          path: playwright-report
+          retention-days: 30
+          if-no-files-found: ignore
 
   deploy:
     if: always()
