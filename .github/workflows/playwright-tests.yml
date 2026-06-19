@@ -41,17 +41,7 @@ jobs:
       - name: Run Playwright tests
         run: npm test
         continue-on-error: true
-
-      - name: Check test results
-        if: always()
-        run: |
-          echo "Checking for allure-results directory..."
-          if exist "allure-results" (
-            dir allure-results
-          ) else (
-            echo "allure-results directory does not exist"
-          )
-
+      
       - name: Setup Java for Allure
         uses: actions/setup-java@v4
         with:
