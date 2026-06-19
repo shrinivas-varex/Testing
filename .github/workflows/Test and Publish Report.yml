@@ -44,7 +44,7 @@ jobs:
         with:
           name: Upload Pages Artifact
           token: ${{ secrets.PAT_TOKEN }}
-          path: playwright-report
+          path: playwright-report/
           retention-days: 30
           if-no-files-found: ignore
 
