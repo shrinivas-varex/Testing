@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: Upload Pages Artifact
-          path: playwright-report/
+          path: playwright-report/index.html
           retention-days: 30
           if-no-files-found: ignore
 
