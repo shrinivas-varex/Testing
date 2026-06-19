@@ -79,26 +79,7 @@ jobs:
           path: allure-report
           retention-days: 30
           if-no-files-found: ignore
-
-      - name: Upload Playwright report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-${{ matrix.node-version }}
-          token: ${{ secrets.PAT_TOKEN }}
-          path: playwright-report
-          retention-days: 30
-          if-no-files-found: ignore
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results-${{ matrix.node-version }}
-          token: ${{ secrets.PAT_TOKEN }}
-          path: test-results
-          retention-days: 30
-          if-no-files-found: ignore
+          
 
       - name: Publish test report
         if: always()
@@ -106,7 +87,7 @@ jobs:
         with:
           name: Playwright Test Report
           token: ${{ secrets.PAT_TOKEN }}
-          path: playwright-report/index.html
+          path: allure-report/*.html
           reporter: 'java-junit'
           fail-on-error: false
 
