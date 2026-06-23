@@ -3,10 +3,15 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
  
- reporter: [
-    ['html'],
-    ['allure-playwright']
+
+reporter: [
+    ['list'],
+    ['monocart-reporter', {
+      name: 'Playwright Test Report',
+      outputFile: './monocart-report/index.html'
+    }]
   ],
+
 
   use: {
     trace: 'retain-on-failure',
