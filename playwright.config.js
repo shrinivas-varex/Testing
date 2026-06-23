@@ -6,7 +6,7 @@ export default defineConfig({
  reporter: [
     ['html'],
     ['allure-playwright']
-  ]
+  ],
 
   use: {
     trace: 'retain-on-failure',
