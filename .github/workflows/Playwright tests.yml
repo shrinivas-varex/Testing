@@ -32,6 +32,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Install Moncart Report
+        run: npm install -D monocart-reporter
+
       - name: Run Playwright Tests
         run: npx playwright test
 
