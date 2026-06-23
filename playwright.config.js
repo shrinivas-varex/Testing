@@ -2,10 +2,11 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  reporter: [
+ 
+ reporter: [
     ['html'],
-    ['list']
-  ],
+    ['allure-playwright']
+  ]
 
   use: {
     trace: 'retain-on-failure',
