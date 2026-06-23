@@ -2,12 +2,13 @@
   "name": "playwright-allure-example",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "test": "npx playwright test",
-    "test:headed": "npx playwright test --headed",
-    "allure:generate": "npx allure generate allure-results --clean -o allure-report",
-    "allure:open": "npx allure open allure-report"
+
+"scripts": {
+    "test": "playwright test",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report"
   },
+
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "allure-commandline": "^2.20.1",
