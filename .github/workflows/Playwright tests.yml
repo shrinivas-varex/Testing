@@ -32,9 +32,6 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Install Playwright Browsers
-        run: npm install -D @playwright/test allure-playwright
-
       - name: Run Playwright Tests
         run: npx playwright test
 
